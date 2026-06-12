@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Player - Watch Free Video</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    * { font-family: 'Noto Sans Sinhala', 'Inter', sans-serif; }
+    body { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); min-height: 100vh; }
+ .glass { background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(148, 163, 184, 0.1); }
+ .btn-gradient { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); transition: all 0.3s ease; }
+ .btn-gradient:hover { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4); }
+    #videoModal { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+    video { outline: none; }
+    video::-webkit-media-controls-enclosure { border-radius: 12px; }
+</style>
+</head>
+<body class="text-slate-100 flex items-center justify-center p-4">
+    <div class="w-full max-w-2xl mx-auto">
+        <div class="glass rounded-3xl shadow-2xl overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 md:p-8 text-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-black opacity-10"></div>
+                <div class="relative z-10">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-2xl mb-4 backdrop-blur-sm">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Free Video Player</h1>
+                    <p class="text-blue-100 text-sm md:text-base">වීඩියෝව නොමිලේ නරඹන්න</p>
+                </div>
+            </div>
+
+            <div class="p-6 md:p-8">
+                <!-- Adsterra Banner Ad 1 -->
+                <div class="mb-6 flex justify-center">
+                    <script async="async" data-cfasync="false" src="https://assistedtogether.com/6e2df2c2005b57ae387350c8b8d38fad/invoke.js"></script>
+                    <div id="container-6e2df2c2005b57ae387350c8b8d38fad"></div>
+                </div>
+
+                <!-- Watch Video Button - Always Active -->
+                <button onclick="watchVideo()" class="btn-gradient w-full text-white font-bold py-5 px-6 rounded-xl shadow-lg flex items-center justify-center gap-3 text-lg mb-6">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>Watch Video Now</span>
+                </button>
+
+                <!-- Adsterra Banner Ad 2 -->
+                <div class="mb-6 flex justify-center">
+                    <script>
+                      atOptions = {
+                        'key' : 'cb6207cef6217cc53d5f25679e9e3070',
+                        'format' : 'iframe',
+                        'height' : 90,
+                        'width' : 728,
+                        'params' : {}
+                      };
+                    </script>
+                    <script src="https://assistedtogether.com/cb6207cef6217cc53d5f25679e9e3070/invoke.js"></script>
+                </div>
+
+                <!-- Info Text - No Incentive -->
+                <div class="p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
+                    <div class="flex gap-3">
+                        <svg class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <p class="text-xs text-blue-300 leading-relaxed">
+                            මෙම සේවාව නොමිලේ ලබා දීමට Advertisements මගින් සහය වන්න. Video එක බලන්න button එක click කරන්න.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-900/50 px-6 md:px-8 py-4 border-t border-slate-700/50">
+                <p class="text-center text-slate-500 text-xs">
+                    © 2024 Video Player. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="hidden fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4" onclick="closeModalOnBackdrop(event)">
+        <div class="relative w-full max-w-5xl bg-slate-900 rounded-2xl shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
+            <button onclick="closeVideoModal()" class="absolute top-4 right-4 z-10 w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <video id="videoPlayer" class="w-full h-auto max-h-[80vh]" controls controlsList="nodownload" oncontextmenu="return false" preload="metadata">
+                <source src="./myvideo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
+<script>
+    function watchVideo() {
+        const modal = document.getElementById('videoModal');
+        const video = document.getElementById('videoPlayer');
+        
+        modal.classList.remove('hidden');
+        video.play().catch(err => {
+            console.log('Video autoplay prevented:', err);
+        });
+    }
+
+    function closeVideoModal() {
+        const modal = document.getElementById('videoModal');
+        const video = document.getElementById('videoPlayer');
+        
+        video.pause();
+        video.currentTime = 0;
+        modal.classList.add('hidden');
+    }
+
+    function closeModalOnBackdrop(event) {
+        if (event.target.id === 'videoModal') {
+            closeVideoModal();
+        }
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('videoModal');
+            if (!modal.classList.contains('hidden')) {
+                e.preventDefault();
+                closeVideoModal();
+            }
+        }
+    });
+</script>
+
+<!-- Adsterra Scripts -->
+<script src="https://assistedtogether.com/01/73/b4/0173b4028e9c73d716a537d51ff90abc.js"></script>
+<script src="https://assistedtogether.com/b5/55/0a/b5550aed167b70315aa4b506e2cdb81f.js"></script>
+
+</body>
+</html>
