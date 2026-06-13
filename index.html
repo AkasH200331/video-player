@@ -11,9 +11,9 @@
 <style>
     * { font-family: 'Noto Sans Sinhala', 'Inter', sans-serif; }
     body { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); min-height: 100vh; }
- .glass { background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(148, 163, 184, 0.1); }
- .btn-gradient { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); transition: all 0.3s ease; }
- .btn-gradient:hover { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4); }
+.glass { background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(148, 163, 184, 0.1); }
+.btn-gradient { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); transition: all 0.3s ease; }
+.btn-gradient:hover { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4); }
     #videoModal { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
     video { outline: none; }
     video::-webkit-media-controls-enclosure { border-radius: 12px; }
@@ -36,13 +36,11 @@
             </div>
 
             <div class="p-6 md:p-8">
-                <!-- Adsterra Banner Ad 1 -->
                 <div class="mb-6 flex justify-center">
                     <script async="async" data-cfasync="false" src="https://assistedtogether.com/6e2df2c2005b57ae387350c8b8d38fad/invoke.js"></script>
                     <div id="container-6e2df2c2005b57ae387350c8b8d38fad"></div>
                 </div>
 
-                <!-- Watch Video Button - Always Active -->
                 <button onclick="watchVideo()" class="btn-gradient w-full text-white font-bold py-5 px-6 rounded-xl shadow-lg flex items-center justify-center gap-3 text-lg mb-6">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
@@ -51,7 +49,6 @@
                     <span>Watch Video Now</span>
                 </button>
 
-                <!-- Adsterra Banner Ad 2 -->
                 <div class="mb-6 flex justify-center">
                     <script>
                       atOptions = {
@@ -65,7 +62,6 @@
                     <script src="https://assistedtogether.com/cb6207cef6217cc53d5f25679e9e3070/invoke.js"></script>
                 </div>
 
-                <!-- Info Text - No Incentive -->
                 <div class="p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
                     <div class="flex gap-3">
                         <svg class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,7 +82,6 @@
         </div>
     </div>
 
-    <!-- Video Modal -->
     <div id="videoModal" class="hidden fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4" onclick="closeModalOnBackdrop(event)">
         <div class="relative w-full max-w-5xl bg-slate-900 rounded-2xl shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
             <button onclick="closeVideoModal()" class="absolute top-4 right-4 z-10 w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm">
@@ -94,8 +89,27 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
             </button>
-            <video id="videoPlayer" class="w-full h-auto max-h-[80vh]" controls controlsList="nodownload" oncontextmenu="return false" preload="metadata">
-                <source src="./myvideo.mp4" type="video/mp4">
+            
+            <!-- Loading Spinner -->
+            <div id="loadingSpinner" class="hidden absolute inset-0 flex items-center justify-center bg-slate-900 z-20">
+                <div class="text-center">
+                    <div class="inline-block w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                    <p class="text-white mt-4">Loading video...</p>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div id="videoError" class="hidden p-8 text-center">
+                <svg class="w-16 h-16 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <h3 class="text-xl font-bold text-white mb-2">Video Load Failed</h3>
+                <p class="text-slate-400 text-sm mb-4" id="errorMessage">Video file එක හොයාගන්න බැරි උනා.</p>
+                <p class="text-xs text-slate-500">Check: 1) File name: myvideo.mp4 2) File size < 25MB 3) File format: MP4 H.264</p>
+            </div>
+
+            <video id="videoPlayer" class="w-full h-auto max-h-" controls controlsList="nodownload" oncontextmenu="return false" preload="metadata">
+                <source src="myvideo.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
@@ -105,20 +119,68 @@
     function watchVideo() {
         const modal = document.getElementById('videoModal');
         const video = document.getElementById('videoPlayer');
-        
+        const spinner = document.getElementById('loadingSpinner');
+        const errorDiv = document.getElementById('videoError');
+        const errorMsg = document.getElementById('errorMessage');
+
         modal.classList.remove('hidden');
-        video.play().catch(err => {
-            console.log('Video autoplay prevented:', err);
-        });
+        spinner.classList.remove('hidden');
+        errorDiv.classList.add('hidden');
+        video.classList.add('hidden');
+
+        // Check if video can load
+        video.addEventListener('loadeddata', function onLoad() {
+            spinner.classList.add('hidden');
+            video.classList.remove('hidden');
+            video.removeEventListener('loadeddata', onLoad);
+            video.play().catch(err => {
+                console.log('Autoplay prevented:', err);
+            });
+        }, { once: true });
+
+        // Error handling
+        video.addEventListener('error', function onError() {
+            spinner.classList.add('hidden');
+            errorDiv.classList.remove('hidden');
+            video.classList.add('hidden');
+            
+            const error = video.error;
+            if (error) {
+                switch(error.code) {
+                    case 1:
+                        errorMsg.textContent = 'Video loading aborted.';
+                        break;
+                    case 2:
+                        errorMsg.textContent = 'Network error. File එක 25MB වලට වඩා ලොකු වෙන්න පුලුවන්.';
+                        break;
+                    case 3:
+                        errorMsg.textContent = 'Video decode error. MP4 H.264 format එකේද කියලා check කරන්න.';
+                        break;
+                    case 4:
+                        errorMsg.textContent = 'Video file එක හොයාගන්න බෑ. myvideo.mp4 කියලා GitHub එකේ තියෙනවද බලන්න.';
+                        break;
+                    default:
+                        errorMsg.textContent = 'Unknown error occurred.';
+                }
+            }
+            video.removeEventListener('error', onError);
+        }, { once: true });
+
+        video.load(); // Force reload
     }
 
     function closeVideoModal() {
         const modal = document.getElementById('videoModal');
         const video = document.getElementById('videoPlayer');
-        
+        const spinner = document.getElementById('loadingSpinner');
+        const errorDiv = document.getElementById('videoError');
+
         video.pause();
         video.currentTime = 0;
         modal.classList.add('hidden');
+        spinner.classList.add('hidden');
+        errorDiv.classList.add('hidden');
+        video.classList.remove('hidden');
     }
 
     function closeModalOnBackdrop(event) {
@@ -138,7 +200,6 @@
     });
 </script>
 
-<!-- Adsterra Scripts -->
 <script src="https://assistedtogether.com/01/73/b4/0173b4028e9c73d716a537d51ff90abc.js"></script>
 <script src="https://assistedtogether.com/b5/55/0a/b5550aed167b70315aa4b506e2cdb81f.js"></script>
 
